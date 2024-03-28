@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "ema"
+version = "0.1.0"
+description = "An [E]letronic [M]anagment [A]ssistant with gachapon"
+authors = ["USER 1103 <79700949+user-1103@users.noreply.github.com>"]
+readme = "README.md"
+license = "AGPL-3.0-only"
+packages = [
+  { include = "ema" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

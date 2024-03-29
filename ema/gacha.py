@@ -234,13 +234,6 @@ def check_in_user(u: User) -> int:
     """
     if ((u.lastlogin + 86400) >= time()):
         raise Exception("You already checked in!")
-    entry = ""
-    while True:
-        entry = input("EMA wants to know about your day (100 chars min): ")
-        if (input("Done [Y/n]?").lower() == "y"):
-            break
-    with open(Path("~/.ema-journal"), 'a') as f:
-        f.write(entry)
     u.lastlogin = time()
     return calculate_day_reward(u)
 

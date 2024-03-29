@@ -2,8 +2,76 @@
 This module contains all the user facing commands
 """
 
-from ema.gacha import Task, User
-from printer import ema_print, todo_print
+from collections.abc import Callable
+from typing import Any, Dict, Final, Tuple
+from ema.gacha import Task, User, check_in_user, spin_user
+from printer import day_print, done_print, ema_print, inventory_print, spin_print, todo_print
+
+
+def tasks(u: User, t: str) -> None:
+    """
+    List todos.
+
+    :param u: The user
+    :param t: unused
+    """
+    ema_print("I will pay you if you do these tasks for me...")
+    todo_print(u)
+
+def archive(u: User, t: str) -> None:
+    """
+    List done tasks.
+
+    :param u: The user
+    :param t: unused
+    """
+    ema_print("This is what you have done for me...")
+    done_print(u)
+
+def daily(u: User, t: str) -> None:
+    """
+    List daily tasks.
+
+    :param u: The user
+    :param t: unused
+    """
+    ema_print("If you want a cut of what my workers have found you must do"
+              " your dailes!")
+    day_print(u)
+
+def inventory(u: User, t: str) -> None:
+    """
+    List inventory.
+
+    :param u: The user
+    :param t: unused
+    """
+    ema_print("This is what you have on your person:")
+    inventory_print(u)
+
+def checkin(u: User, t: str) -> None:
+    """
+    Checkin daily tasks.
+
+    :param u: The user
+    :param t: unused
+    """
+    ema_print("Have you done your daily tasks?")
+    day_print(u)
+    if (input("Done [Y/n]?").lower() == "n"):
+        raise Exception("You must do you daily tasks first!")
+    check_in_user(u)
+
+def roll(u: User, t: str) -> None:
+    """
+    Adds a task to a user.
+
+    :param u: The user to add to
+    :param t: The name of the banner to roll
+    """
+    reward = spin_user(u, t)
+    ema_print("Lets spin the wheal and see what you got!")
+    spin_print(reward)
 
 def add(u: User, t: str) -> None:
     """
@@ -57,7 +125,13 @@ def done(u: User, name: str) -> None:
         ema_print((f"Very good! I will give you {x.tickets}"
                     f"tickets for your work!"))
 
-    
-
-
-
+CMDS: Final[Dict[str, Tuple[Callable[[User, str], None], str]]] = {
+        "t": ( tasks, "List undone tasks."),
+        "T": ( archive, "List finished tasks."),
+        "d": ( done, "Mark task as done."),
+        "D": ( daily, "List daily tasks."),
+        "i": ( inventory, "List invintory."),
+        "x": ( remove, "Delete named task."),
+        "c": ( checkin, "Checkin."),
+        "r": ( roll, "Roll for a given banner."),
+        }

@@ -1,12 +1,13 @@
 """
 This module contains the code for displaying data to the user in a cli fasion.
 """
+from random import randint, shuffle
 from typing import Final
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.columns import Columns
 from rich.table import Table
-from time import time
+from time import sleep, time
 
 from ema.gacha import PETS, User
 
@@ -33,6 +34,24 @@ def inventory_print(u: User) -> None:
                 tmp = Markdown(f"**{r.name}**\n{r.description}")
                 inventory.append(tmp)
     CONSOLE.print(Columns(inventory, expand=True, equal=True))
+
+def spin_print(t: str) -> None:
+    """
+    Prints a spin.
+
+    :param t: The wone reward.
+    """
+    posible = "😼-😻-😸-😹-😽-🙀-🤡-?".split("-")
+    tmp = list()
+    for x in range(randint(5,10)):
+        shuffle(posible)
+        tmp.append(f"{posible}")
+    with CONSOLE.status("[bold green]Spinning!!!!!") as status:
+        while tmp:
+            task = tmp.pop(0)
+            sleep(randint(1,4))
+            CONSOLE.log(f"[{task}]")
+    ema_print(f"You wone {t}!!!")
 
 def todo_print(u: User) -> None:
     """

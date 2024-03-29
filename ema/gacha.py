@@ -10,6 +10,7 @@ from pickle import dump, load
 from time import time
 from random import choices, randint
 
+
 PETS: Final[Dict[str, Tuple[int, int, str]]] = {
         "👶": (5, 0, "Christan Baby: do not get in an ariplaine with him"),
         "😀": (100, 5, "Normal Human: fears god, works slowly"),
@@ -79,11 +80,18 @@ class Banner():
 class Task():
     """
     Represents a task
+
+    :param name: What needs to be done
+    :param tickets: The number of tickets rewarded
+    :param engraved_reward: Does this task directly give a reward
+    :param is_done: Is it done
+    :param is_daily: Is it a daily?
     """
     name: str
-    tickets: int
-    engraved_reward: str
-    is_done: bool
+    tickets: int = 0
+    engraved_reward: str = ""
+    is_done: bool = False
+    is_daily: bool = False
 
 
 @dataclass
@@ -111,6 +119,7 @@ class User():
     lastlogin: float = 0.0
     pets: List[str] = field(default_factory=list)
     banners: List[Banner] = field(default_factory=list)
+    tasks: List[Task] = field(default_factory=list)
 
 def save_user(u: User) -> None:
     """

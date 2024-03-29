@@ -86,12 +86,14 @@ class Task():
     :param engraved_reward: Does this task directly give a reward
     :param is_done: Is it done
     :param is_daily: Is it a daily?
+    :param uuid: Unique id?
     """
     name: str
     tickets: int = 0
     engraved_reward: str = ""
     is_done: bool = False
     is_daily: bool = False
+    UUID: str = field(default_factory=lambda : str(time()))
 
 
 @dataclass
